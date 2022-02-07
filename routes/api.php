@@ -20,7 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    Route::get('startNewGame', [GameController::class, 'startNewGame']);
+    Route::get('startNewGame', [GameController::class, 'startNewGame'])
+        ->name('api.game.start');
 
 });
 
