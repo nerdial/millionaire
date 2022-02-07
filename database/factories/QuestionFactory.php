@@ -14,7 +14,14 @@ class QuestionFactory extends Factory
     public function definition()
     {
         return [
-
+            'title' => $this->generateMeaningfulQuestion(),
+            'description' => $this->faker->paragraph,
+            'point' => $this->faker->randomDigit()
         ];
+    }
+
+    protected function generateMeaningfulQuestion()
+    {
+        return $this->faker->title;
     }
 }
