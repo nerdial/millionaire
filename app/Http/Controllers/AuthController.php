@@ -2,49 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    public function register(RegisterRequest $request, AuthService $authService)
     {
-        $attr = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed'
-        ]);
-
-        $user = User::create([
-            'name' => $attr['name'],
-            'password' => bcrypt($attr['password']),
-            'email' => $attr['email']
-        ]);
-
-        return response([
-            'token' => $user->createToken('vueApp')->plainTextToken
+        $registerData = $request->validated();
+        $user = $authService->register($registerData);
+        return response()->json([
+            'data' => [
+                'token' => $authService->createNewToken($user)
+            ]
         ]);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request, AuthService $authService)
     {
-        $attr = $request->validate([
-            'email' => 'required|string|email|',
-            'password' => 'required|string|min:6'
-        ]);
+        $loginData = $request->validated();
 
-        if (!Auth::attempt($attr)) {
+        if (!Auth::attempt($loginData)) {
             abort(401, 'Credentials do not match');
         }
-
+        $user = auth()->user();
         return response()->json([
             'data' => [
-                'token' => auth()->user()->createToken('vueApp')->plainTextToken
+                'token' => $authService->createNewToken($user)
             ]
         ]);
-
-
     }
 
     public function logout()
