@@ -16,10 +16,10 @@
 
                         {{ __('You are logged in!') }}
 
-
                         @section('content')
-                            <login-component></login-component>
+                            <router-view></router-view>
                         @endsection
+
                     </div>
                 </div>
             </div>

@@ -20,6 +20,7 @@
                         @section('content')
                             <start-component></start-component>
                         @endsection
+                        </div>
                 </div>
             </div>
         </div>
