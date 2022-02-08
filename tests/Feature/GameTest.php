@@ -28,6 +28,16 @@ class GameTest extends TestCase
     public function test_start_a_new_game()
     {
         $response = $this->get(route('api.game.start'));
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+            ->assertJsonCount(5, 'data')
+            ->assertJsonStructure([
+                'data' => ['*' => [
+                    'id', 'title', 'description', 'point'
+                ]
+                ]]);
+
+        $collection = collect($response->json('data'));
+        $uniqueCounted = $collection->pluck('id')->unique()->count();
+        $this->assertEquals($uniqueCounted, 5);
     }
 }
