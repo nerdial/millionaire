@@ -16,7 +16,7 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\User::class);
-            $table->integer('total_point');
+            $table->integer('total_point')->default(0);
             $table->timestamps();
         });
     }

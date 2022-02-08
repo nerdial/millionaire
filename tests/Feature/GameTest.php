@@ -11,6 +11,8 @@ use Laravel\Sanctum\Sanctum;
 class GameTest extends TestCase
 {
 
+    use RefreshDatabase;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -18,6 +20,7 @@ class GameTest extends TestCase
             User::factory()->create(),
             ['*']
         );
+        $this->seed('QuestionSeeder');
     }
 
     /**
@@ -32,7 +35,7 @@ class GameTest extends TestCase
             ->assertJsonCount(5, 'data')
             ->assertJsonStructure([
                 'data' => ['*' => [
-                    'id', 'title', 'description', 'point'
+                    'id', 'title', 'description', 'point','options'
                 ]
                 ]]);
 

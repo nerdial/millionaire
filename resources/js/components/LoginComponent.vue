@@ -38,13 +38,6 @@
         mounted() {
         },
         methods : {
-            startNewGame(){
-
-                axios.get('api/user').then(data=> {
-                    console.log(data)
-                })
-
-            },
             validate : function(){
                 this.emailBlured = true;
                 this.passwordBlured = true;
@@ -52,14 +45,11 @@
                     this.valid = true;
                 }
             },
-
             validEmail : function(email) {
-
-                var re = /(.+)@(.+){2,}\.(.+){2,}/;
+                let re = /(.+)@(.+){2,}\.(.+){2,}/;
                 if(re.test(email.toLowerCase())){
                     return true;
                 }
-
             },
 
             validPassword : function(password) {
@@ -75,10 +65,9 @@
                     axios.post('api/login',{
                         email : this.email,
                         password : this.password
-                    }).then( data => {
-
+                    }).then( ({data}) => {
+                         localStorage.setItem('api_token', data.data.token)
                          this.submitted = true;
-
                     })
 
 

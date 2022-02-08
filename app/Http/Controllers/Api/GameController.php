@@ -16,8 +16,15 @@ class GameController extends Controller
      */
     public function startNewGame(GameService $gameService) :JsonResource
     {
+        $user = auth()->user();
+        $game = $gameService->createNewGame($user);
         $questions = $gameService->getFiveRandomQuestions();
         return QuestionResource::collection($questions);
+    }
+
+    public function updateGameScoreWithQuestion(Request $request, GameService $gameService)
+    {
+
     }
 
 }

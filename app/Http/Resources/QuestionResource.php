@@ -18,7 +18,8 @@ class QuestionResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'point' => $this->point
+            'point' => $this->point,
+            'options' => $this->options
         ];
     }
 }

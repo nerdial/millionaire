@@ -5333,11 +5333,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {},
   methods: {
-    startNewGame: function startNewGame() {
-      axios.get('api/user').then(function (data) {
-        console.log(data);
-      });
-    },
     validate: function validate() {
       this.emailBlured = true;
       this.passwordBlured = true;
@@ -5367,7 +5362,9 @@ __webpack_require__.r(__webpack_exports__);
         axios.post('api/login', {
           email: this.email,
           password: this.password
-        }).then(function (data) {
+        }).then(function (_ref) {
+          var data = _ref.data;
+          localStorage.setItem('api_token', data.data.token);
           _this.submitted = true;
         });
       }
