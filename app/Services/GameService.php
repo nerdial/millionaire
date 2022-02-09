@@ -19,4 +19,9 @@ class GameService
            'user_id' => $user->id
         ]);
     }
+
+    public function getTopUsers()
+    {
+        return Game::max('');
+    }
 }

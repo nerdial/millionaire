@@ -27,9 +27,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/out', [AuthController::class, 'logout']);
 
-
     Route::get('startNewGame', [GameController::class, 'startNewGame'])
         ->name('api.game.start');
+
+    Route::get('topUsers', [GameController::class, 'getTopUsers'])
+        ->name('api.game.topUsers');
 
 });
 

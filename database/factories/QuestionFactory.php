@@ -16,7 +16,7 @@ class QuestionFactory extends Factory
         return [
             'title' => $this->generateMeaningfulQuestion(),
             'description' => $this->faker->paragraph,
-            'point' => $this->faker->randomDigit()
+            'point' => $this->faker->numberBetween(5, 20)
         ];
     }
 

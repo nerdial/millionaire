@@ -13,11 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $user = \App\Models\User::factory(1)->create([
-            'email' => 'user@email.com'
-        ])->first()->createToken('vueApp');
-
-
+        $this->call(UserSeeder::class);
         $this->call(QuestionSeeder::class);
     }
 }

@@ -14,7 +14,8 @@ class GameFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => '',
+            'total_point' => $this->faker->numberBetween(250, 1000)
         ];
     }
 }
