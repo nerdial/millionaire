@@ -71,13 +71,15 @@ export default {
             this.validate();
             if (this.valid) {
 
-                axios.post('api/login', {
-                    email: this.email,
-                    password: this.password
-                }).then(({data}) => {
-                    localStorage.setItem('api_token', data.data.token)
-                    this.submitted = true;
-                })
+                axios.get('/sanctum/csrf-cookie').then(response => {
+                    axios.post('api/login', {
+                        email: this.email,
+                        password: this.password
+                    }).then(({data}) => {
+                        localStorage.setItem('api_token', data.data.token)
+                        this.submitted = true;
+                    })
+                });
 
 
             }

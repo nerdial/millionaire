@@ -16,9 +16,7 @@
 
                         {{ __('You are logged in!') }}
 
-                        @section('content')
-                            <router-view></router-view>
-                        @endsection
+
 
                     </div>
                 </div>

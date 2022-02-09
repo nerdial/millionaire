@@ -12,5 +12,9 @@ class Option extends Model
         'title', 'is_correct'
     ];
 
+    protected $visible = [
+      'id' , 'title', 'is_correct'
+    ];
+
     use HasFactory;
 }

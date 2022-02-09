@@ -31,6 +31,7 @@ Vue.use(VueRouter)
 import Login from '../js/components/LoginComponent'
 import Register from '../js/components/RegisterComponent'
 import Dashboard from '../js/components/LoginComponent'
+import StartGame from '../js/components/StartGameComponent'
 
 const routes = [
     {
@@ -42,6 +43,11 @@ const routes = [
         name: 'register',
         path: '/register',
         component: Register
+    },
+    {
+        name: 'start',
+        path: '/start',
+        component: StartGame
     },
     {
         name: 'dashboard',

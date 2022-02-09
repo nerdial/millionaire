@@ -20,8 +20,9 @@ class UserSeeder extends Seeder
             'email' => 'user@email.com'
         ])->first()->createToken('vueApp');
 
-
-        $users = User::factory(10)->has(Game::factory()->count(10))->create();
+        $users = User::factory(10)
+            ->has(Game::factory()->count(10))
+            ->create();
 
     }
 }

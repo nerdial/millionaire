@@ -26,8 +26,7 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Who wants to be a Millionaire ?
                 </a>
-                <router-link to="/register">Register</router-link>
-                <router-link style="margin-left: 20px" to="/">Login</router-link>
+                <router-link style="margin-left: 20px" to="/start">Start Game</router-link>
                 <router-link style="margin-left: 20px" to="/dashboard">Dashboard</router-link>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -46,7 +45,7 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">Login As Admin</a>
+                                    <a class="nav-link" href="{{ route('login') }}">Login</a>
                                 </li>
                             @endif
 
