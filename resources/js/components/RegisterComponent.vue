@@ -4,6 +4,13 @@
             <div class="col-md-6">
                 <div class="card px-5 py-5" id="form1">
                     <div class="form-data" v-if="!submitted">
+                        <div class="forms-inputs mb-4"><span>Name</span>
+                            <input autocomplete="off" type="text" v-model="name"
+                                   v-bind:class="{'form-control':true, 'is-invalid' : !validName(name) && nameBlurred}"
+                                   v-on:blur="nameBlurred = true">
+                            <div class="invalid-feedback">A valid name is required!</div>
+                        </div>
+
                         <div class="forms-inputs mb-4"><span>Email</span> <input autocomplete="off" type="text"
                                                                                  v-model="email"
                                                                                  v-bind:class="{'form-control':true, 'is-invalid' : !validEmail(email) && emailBlurred}"
@@ -22,7 +29,7 @@
                     </div>
                     <div class="success-data" v-else>
                         <div class="text-center d-flex flex-column"><i class='bx bxs-badge-check'></i> <span
-                            class="text-center fs-1">You have been logged in <br> Successfully</span></div>
+                            class="text-center fs-1">You have been registered <br> Successfully</span></div>
                     </div>
                 </div>
             </div>
@@ -35,11 +42,13 @@ export default {
 
     data() {
         return {
-            email: "user@email.com",
+            name: "",
+            nameBlurred: false,
+            email: "",
             emailBlurred: false,
             valid: false,
             submitted: false,
-            password: "password",
+            password: "",
             passwordBlurred: false
         }
     },
@@ -67,11 +76,18 @@ export default {
             }
         },
 
+        validName: function (name) {
+            if (name.length > 1) {
+                return true;
+            }
+        },
+
         submit: function () {
             this.validate();
             if (this.valid) {
 
-                axios.post('api/login', {
+                axios.post('api/register', {
+                    name: this.name,
                     email: this.email,
                     password: this.password
                 }).then(({data}) => {

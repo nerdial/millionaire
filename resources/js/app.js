@@ -29,7 +29,7 @@ Vue.use(VueRouter)
 
 
 import Login from '../js/components/LoginComponent'
-import Register from '../js/components/LoginComponent'
+import Register from '../js/components/RegisterComponent'
 import Dashboard from '../js/components/LoginComponent'
 
 const routes = [
