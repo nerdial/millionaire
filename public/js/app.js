@@ -5531,11 +5531,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       displayResult: false,
-      nextQuestionTimout: 2 * 1000,
+      nextQuestionTimout: 1.5 * 1000,
       totalQuestions: 5,
       totalPoint: 0,
       userTotalPoint: 0,
@@ -5544,7 +5547,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       selected: '',
       correctMessage: false,
       incorrectMessage: false,
-      correctValue: null,
+      correctItem: null,
       correctAnswer: '',
       options: [],
       questions: [],
@@ -5555,7 +5558,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   mounted: function mounted() {
-    this.header = this.mainHeader;
+    this.resetHeader();
   },
   methods: {
     getFreshQuestions: function getFreshQuestions() {
@@ -5587,6 +5590,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
+    resetHeader: function resetHeader() {
+      this.header = this.mainHeader;
+    },
     startTheGame: function startTheGame(questions) {
       this.questions = questions;
       this.askQuestion(this.cursor);
@@ -5596,6 +5602,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.incorrectMessage = false;
       this.displayNext = true;
     },
+    resetSession: function resetSession() {
+      this.userTotalPoint = 0;
+      this.totalPoint = 0;
+      this.selected = '';
+      this.correctItem = null;
+    },
     lastQuestion: function lastQuestion(cursor) {
       return cursor === this.totalQuestions - 1;
     },
@@ -5603,11 +5615,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.updateUserPoint();
     },
     correctAnswerSelected: function correctAnswerSelected() {
-      return this.correctValue.id == this.selected;
+      return this.correctItem.id == this.selected;
     },
     updateUserPoint: function updateUserPoint() {
       if (this.correctAnswerSelected()) {
-        this.userTotalPoint += parseInt(this.currentPoint);
+        this.userTotalPoint += this.currentPoint;
       }
 
       this.handleMessage(this.correctAnswerSelected());
@@ -5633,11 +5645,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       });
     },
     showResult: function showResult() {
+      this.sendResult();
       this.displayResult = true;
+      this.gameTime = false;
     },
     sendResult: function sendResult() {},
     askQuestion: function askQuestion(cursor) {
       if (this.lastQuestion(cursor)) {
+        this.resetQuestion();
+        this.resetHeader();
         return this.showResult();
       }
 
@@ -5646,11 +5662,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.cursor++;
       this.header = question.title;
       this.options = question.options;
-      this.currentPoint = question.point;
-      this.correctValue = this.options.find(function (item) {
+      this.currentPoint = parseInt(question.point);
+      this.correctItem = this.options.find(function (item) {
         return item.is_correct == '1';
       });
-    }
+      this.totalPoint += this.currentPoint;
+    },
+    calculateTotalPoint: function calculateTotalPoint() {}
   }
 });
 
@@ -29534,6 +29552,25 @@ var render = function () {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
+            _vm.displayResult & !_vm.gameTime
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "alert alert-success",
+                    attrs: { role: "alert" },
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Your total point was :  " +
+                        _vm._s(_vm.userTotalPoint) +
+                        " out of " +
+                        _vm._s(_vm.totalPoint) +
+                        "\n                    "
+                    ),
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
             !_vm.gameTime
               ? _c(
                   "button",
@@ -29544,7 +29581,7 @@ var render = function () {
                   },
                   [
                     _vm._v(
-                      "\n                        Start\n                    "
+                      "\n                        Start New Game\n                    "
                     ),
                   ]
                 )
@@ -29610,7 +29647,7 @@ var render = function () {
                           [
                             _vm._v(
                               "\n                            Correct answer is : " +
-                                _vm._s(_vm.correctValue.title) +
+                                _vm._s(_vm.correctItem.title) +
                                 " !\n                        "
                             ),
                           ]
@@ -29628,11 +29665,6 @@ var render = function () {
                           [_vm._v("Next Question\n                        ")]
                         )
                       : _vm._e(),
-                    _vm._v(
-                      "\n\n                        " +
-                        _vm._s(_vm.userTotalPoint) +
-                        "\n\n\n                    "
-                    ),
                   ],
                   2
                 )
