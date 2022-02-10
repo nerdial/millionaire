@@ -4,24 +4,21 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Information</div>
+                @auth
+                    @section('content')
+                        <router-view></router-view>
+                    @endsection
+                @endauth
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-
-                        Welcome to the party ,
+                @guest
+                    <div class="card">
+                        <div class="card-header">Information</div>
+                        <div class="card-body">
+                            Welcome to the party ,
                             you need to login first, if you want a game
-
-
-
+                        </div>
                     </div>
-                </div>
+                @endguest
             </div>
         </div>
     </div>
