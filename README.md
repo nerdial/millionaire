@@ -17,7 +17,7 @@ composer install
 ## If you want dummy user, questions and also options :
 
 ```console
-php artisan migrate:fresh --seed
+php artisan migrate --seed
 ```
 
 ## Otherwise, run only migrations
