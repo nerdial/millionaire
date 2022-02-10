@@ -14,7 +14,7 @@
 composer install
 ```
 
-## If you want dummy user, questions and also options :
+## If you want dummy stats, user, game and questions:
 
 ```console
 php artisan migrate --seed
