@@ -74,6 +74,7 @@ export default {
     },
     methods: {
         setupGame() {
+            this.resetSession()
             axios.all([
                 axios.get('api/game/startNewGame'),
                 axios.get('api/game/getFreshQuestions'),

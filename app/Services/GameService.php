@@ -30,9 +30,4 @@ class GameService
         $game->total_point = $score;
         return $game->save();
     }
-
-    public function getTopUsers()
-    {
-        return Game::max('');
-    }
 }

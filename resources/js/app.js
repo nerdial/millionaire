@@ -27,32 +27,25 @@ Vue.use(VueRouter)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 
-
-import Login from '../js/components/LoginComponent'
-import Register from '../js/components/RegisterComponent'
 import TopUsers from '../js/components/ExampleComponent'
 import StartGame from '../js/components/StartGameComponent'
+import UserStat from '../js/components/StatComponent'
 
 const routes = [
     {
-        name: 'login',
-        path: '/',
-        component: Login
-    },
-    {
-        name: 'register',
-        path: '/register',
-        component: Register
-    },
-    {
         name: 'start',
-        path: '/start',
+        path: '/',
         component: StartGame
     },
     {
-        name: 'dashboard',
+        name: 'tops',
         path: '/tops',
         component: TopUsers
+    },
+    {
+        name: 'userStat',
+        path: '/stat',
+        component: UserStat
     }
 ]
 
