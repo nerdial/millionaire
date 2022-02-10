@@ -14,8 +14,16 @@ class StatService
         $totalPoints = Game::where('user_id', $user->id)->sum('total_point');
         return [
             'total_games' => $totalGames,
-            'total_points' => (int) $totalPoints
+            'total_points' => (int)$totalPoints
         ];
+    }
+
+    public function getTopUsersStat()
+    {
+        return Game::with('user:id,name')->groupBy('user_id')
+            ->selectRaw('sum(total_point) as sum, user_id')
+            ->limit(10)->orderBy('sum', 'desc')
+            ->get();
     }
 
 }

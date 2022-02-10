@@ -6,18 +6,15 @@
                     <div class="card-header">{{ header }}</div>
                     <div class="card-body">
 
-
                         <div v-if="displayResult & !gameTime" class="alert alert-success" role="alert">
                             Your total point was : {{ userTotalPoint }} out of {{ totalPoint }}
                         </div>
-
 
                         <div v-if="!gameTime" class="d-flex justify-content-center">
                             <button @click="setupGame" type="button" class="btn btn-primary">
                                 Start New Game
                             </button>
                         </div>
-
 
                         <div v-if="gameTime">
                             <div v-for="item in options">

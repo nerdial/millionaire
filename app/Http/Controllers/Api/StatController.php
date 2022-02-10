@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TopUserResource;
 use App\Services\StatService;
 
 class StatController extends Controller
@@ -16,7 +17,8 @@ class StatController extends Controller
 
     public function getTopUsers(StatService $statService)
     {
-
+        $data = $statService->getTopUsersStat();
+        return TopUserResource::collection($data);
     }
 
 
