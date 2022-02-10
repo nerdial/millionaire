@@ -1,23 +1,23 @@
 
 
 ## Features
-1. Login
-2. Register
-3. Top 10 user table
-4. Personal stat for each user
-5. Creating new question and option only by admin
+2. Login
+3. Register
+4. Top 10 user table
+5. Personal stat for each user
+6. Creating new question and option only by admin
+7. And obviously playing some game.
 
-## Once you cloned the project  copy the .env.example into .env
-
-```console
-cp .env.example .env
-```
-
-
-## How to set up the project
+## Clone the project and run composer
 
 ```console
 composer install
+```
+
+## Copy the .env.example into .env
+
+```console
+cp .env.example .env
 ```
 
 ## Then you need create an application key for laravel
@@ -38,7 +38,7 @@ php artisan migrate --seed
 php artisan migrate
 ```
 
-## At the end  run your webserver by calling : 
+## At the end,  run your webserver by calling : 
 
 ```console
 php artisan serve
