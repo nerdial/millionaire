@@ -8,12 +8,15 @@
 
 
                         <div v-if="displayResult & !gameTime" class="alert alert-success" role="alert">
-                            Your total point was :  {{ userTotalPoint }} out of {{ totalPoint }}
+                            Your total point was : {{ userTotalPoint }} out of {{ totalPoint }}
                         </div>
 
-                        <button v-if="!gameTime" @click="getFreshQuestions" type="button" class="btn btn-primary">
-                            Start New Game
-                        </button>
+
+                        <div v-if="!gameTime" class="d-flex justify-content-center">
+                            <button @click="setupGame" type="button" class="btn btn-primary">
+                                Start New Game
+                            </button>
+                        </div>
 
 
                         <div v-if="gameTime">
@@ -44,6 +47,7 @@
 export default {
     data() {
         return {
+            gameId: null,
             displayResult: false,
             nextQuestionTimout: 1.5 * 1000,
             totalQuestions: 5,
@@ -61,17 +65,30 @@ export default {
             cursor: 0,
             gameTime: false,
             header: '',
-            mainHeader: 'Would you like to start a fresh game ?'
+            mainHeader: 'Would you like to start a fresh game ?',
+            game: {}
         }
     },
     mounted() {
         this.resetHeader()
     },
     methods: {
-        async getFreshQuestions() {
-            let {data} = await axios.get('api/startNewGame')
-            this.startTheGame(data.data)
-            this.gameTime = true
+        setupGame() {
+            axios.all([
+                axios.get('api/game/startNewGame'),
+                axios.get('api/game/getFreshQuestions'),
+            ])
+                .then(axios.spread((game, questions) => {
+                    this.gameId = game.data.data.id
+                    this.startTheGame(questions.data.data)
+                    this.gameTime = true
+                }));
+        },
+        async sendResult() {
+            const url = `api/game/updateGameScore/${this.gameId}`
+            await axios.patch(url, {
+                score: this.userTotalPoint
+            })
         },
         resetHeader() {
             this.header = this.mainHeader
@@ -90,6 +107,7 @@ export default {
             this.totalPoint = 0
             this.selected = ''
             this.correctItem = null
+            this.cursor = 0
         },
         lastQuestion(cursor) {
             return cursor === this.totalQuestions - 1;
@@ -126,9 +144,7 @@ export default {
             this.displayResult = true
             this.gameTime = false
         },
-        sendResult() {
 
-        },
         askQuestion(cursor) {
             if (this.lastQuestion(cursor)) {
                 this.resetQuestion()
@@ -143,12 +159,7 @@ export default {
             this.currentPoint = parseInt(question.point)
             this.correctItem = this.options.find(item => item.is_correct == '1')
             this.totalPoint += this.currentPoint
-        },
-        calculateTotalPoint() {
-
         }
-
-
     }
 }
 </script>

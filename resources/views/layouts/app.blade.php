@@ -27,7 +27,7 @@
                     Who wants to be a Millionaire ?
                 </a>
                 <router-link style="margin-left: 20px" to="/start">Start Game</router-link>
-                <router-link style="margin-left: 20px" to="/dashboard">Dashboard</router-link>
+                <router-link style="margin-left: 20px" to="/tops">Top Users</router-link>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

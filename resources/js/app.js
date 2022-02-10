@@ -30,7 +30,7 @@ Vue.use(VueRouter)
 
 import Login from '../js/components/LoginComponent'
 import Register from '../js/components/RegisterComponent'
-import Dashboard from '../js/components/LoginComponent'
+import TopUsers from '../js/components/ExampleComponent'
 import StartGame from '../js/components/StartGameComponent'
 
 const routes = [
@@ -51,8 +51,8 @@ const routes = [
     },
     {
         name: 'dashboard',
-        path: '/dashboard',
-        component: Dashboard
+        path: '/tops',
+        component: TopUsers
     }
 ]
 

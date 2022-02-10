@@ -15,12 +15,13 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::factory(1)->create([
+        User::factory(1)->create([
             'name' => 'Default User',
-            'email' => 'user@email.com'
+            'email' => 'user@email.com',
+            'is_admin' => true
         ])->first()->createToken('vueApp');
 
-        $users = User::factory(10)
+        User::factory(10)
             ->has(Game::factory()->count(10))
             ->create();
 
