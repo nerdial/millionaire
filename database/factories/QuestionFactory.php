@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Question;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class QuestionFactory extends Factory
@@ -15,14 +14,13 @@ class QuestionFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->generateMeaningfulQuestion(),
-            'description' => $this->faker->paragraph,
+            'title' => $this->generateMeaninglessQuestion(),
             'point' => $this->faker->numberBetween(5, 20)
         ];
     }
 
-    protected function generateMeaningfulQuestion()
+    protected function generateMeaninglessQuestion()
     {
-        return $this->faker->title;
+        return str_replace('.', ' ?', $this->faker->sentence);
     }
 }

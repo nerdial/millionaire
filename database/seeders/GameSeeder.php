@@ -17,7 +17,6 @@ class GameSeeder extends Seeder
     {
        $defaultUser = User::first();
 
-
        Game::factory(10)->create([
            'user_id' => $defaultUser
        ]);

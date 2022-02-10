@@ -11,11 +11,16 @@ class OptionFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition() :array
     {
         return [
-            'title' => $this->faker->title,
+            'title' => $this->generateMeaninglessOption(),
             'is_correct' => false
         ];
+    }
+
+    public function generateMeaninglessOption() :string
+    {
+        return $this->faker->word(2);
     }
 }

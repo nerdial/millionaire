@@ -17,16 +17,13 @@
                             </thead>
                             <tbody>
                             <tr v-if="topUsers" v-for="user in topUsers">
-                                <th scope="row">{{user.id}}</th>
+                                <th scope="row">{{ user.id }}</th>
                                 <td>{{ user.name }}</td>
-                                <td>{{user.total}}</td>
-
+                                <td>{{ user.total }}</td>
                             </tr>
                             </tbody>
+
                         </table>
-
-
-
                     </div>
                 </div>
             </div>
@@ -38,27 +35,25 @@
 export default {
     data() {
         return {
-            topUsers : null,
-            counter : 0
+            topUsers: null,
+            counter: 0
         }
     },
     async mounted() {
         this.counter = 1
         const {data} = await axios.get('api/stat/topUsers')
         this.topUsers = data.data.map((item) => {
-           return {
-               name : item.name,
-               total : item.total,
-               id : this.counter++
-           }
+            return {
+                name: item.name,
+                total: item.total,
+                id: this.counter++
+            }
         })
-
     },
-    methods : {
+    methods: {
         getCurrentId() {
             this.counter++;
         }
     }
-
 }
 </script>
