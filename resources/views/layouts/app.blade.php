@@ -26,9 +26,14 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Who wants to be a Millionaire ?
                 </a>
-                <router-link style="margin-left: 20px" to="/">Start Game</router-link>
-                <router-link style="margin-left: 20px" to="/tops">Top Users</router-link>
-                <router-link style="margin-left: 20px" to="/stat">User Stat</router-link>
+
+                @auth
+                    <router-link style="margin-left: 20px" to="/">Start Game</router-link>
+                    <router-link style="margin-left: 20px" to="/tops">Top Users</router-link>
+                    <router-link style="margin-left: 20px" to="/stat">User Stat</router-link>
+                @endauth
+
+
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
