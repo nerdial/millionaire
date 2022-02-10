@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ header }}</div>
+                    <div class="card-header" v-html="header"></div>
                     <div class="card-body">
 
                         <div v-if="displayResult & !gameTime" class="alert alert-success" role="alert">
@@ -28,9 +28,13 @@
                             <div v-if="incorrectMessage" class="alert alert-danger" role="alert">
                                 Correct answer is : {{ correctItem.title }} !
                             </div>
-                            <button v-if="displayNext" @click="next" type="button"
+                            <button v-if="displayNext && !lastQuestion(cursor)" @click="next" type="button"
                                     class="btn btn-primary">Next Question
                             </button>
+                            <button v-else-if="displayNext && lastQuestion(cursor)" @click="next" type="button"
+                                    class="btn btn-primary"> Finish
+                            </button>
+
                         </div>
 
                     </div>
@@ -108,7 +112,7 @@ export default {
             this.cursor = 0
         },
         lastQuestion(cursor) {
-            return cursor === this.totalQuestions - 1;
+            return cursor === this.totalQuestions;
         },
         next() {
             this.updateUserPoint();
@@ -150,9 +154,12 @@ export default {
                 return this.showResult()
             }
             this.resetQuestion()
+
             let question = this.questions[cursor]
+            let title = ` <b style="color: #0a53be">${this.cursor + 1} </b> - ${question.title}`
+
             this.cursor++
-            this.header = question.title
+            this.header = title
             this.options = question.options
             this.currentPoint = parseInt(question.point)
             this.correctItem = this.options.find(item => item.is_correct == '1')

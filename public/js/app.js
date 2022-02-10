@@ -5323,6 +5323,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5407,7 +5411,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.cursor = 0;
     },
     lastQuestion: function lastQuestion(cursor) {
-      return cursor === this.totalQuestions - 1;
+      return cursor === this.totalQuestions;
     },
     next: function next() {
       this.updateUserPoint();
@@ -5456,8 +5460,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       this.resetQuestion();
       var question = this.questions[cursor];
+      var title = " <b style=\"color: #0a53be\">".concat(this.cursor + 1, " </b> - ").concat(question.title);
       this.cursor++;
-      this.header = question.title;
+      this.header = title;
       this.options = question.options;
       this.currentPoint = parseInt(question.point);
       this.correctItem = this.options.find(function (item) {
@@ -29194,9 +29199,10 @@ var render = function () {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-8" }, [
         _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v(_vm._s(_vm.header)),
-          ]),
+          _c("div", {
+            staticClass: "card-header",
+            domProps: { innerHTML: _vm._s(_vm.header) },
+          }),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _vm.displayResult & !_vm.gameTime
@@ -29303,7 +29309,7 @@ var render = function () {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.displayNext
+                    _vm.displayNext && !_vm.lastQuestion(_vm.cursor)
                       ? _c(
                           "button",
                           {
@@ -29312,6 +29318,16 @@ var render = function () {
                             on: { click: _vm.next },
                           },
                           [_vm._v("Next Question\n                        ")]
+                        )
+                      : _vm.displayNext && _vm.lastQuestion(_vm.cursor)
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "button" },
+                            on: { click: _vm.next },
+                          },
+                          [_vm._v(" Finish\n                        ")]
                         )
                       : _vm._e(),
                   ],
