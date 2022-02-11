@@ -7,6 +7,7 @@ use App\Http\Requests\GameUpdateRequest;
 use App\Http\Resources\GameResource;
 use App\Http\Resources\QuestionResource;
 use App\Models\Game;
+use App\Models\Question;
 use App\Services\GameService;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -18,8 +19,16 @@ class GameController extends Controller
     /**
      * @return QuestionResource
      */
-    public function startNewGame(GameService $gameService): JsonResource
+    public function startNewGame(GameService $gameService)
     {
+        if(!Question::count()){
+            return response([
+                'success' => false,
+                'error'  => 'There is not much questions to ask ! '
+            ], 400);
+
+        }
+
         $user = auth()->user();
         $game = $gameService->createNewGame($user);
 

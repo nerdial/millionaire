@@ -10,6 +10,11 @@
                             Your total point was : {{ userTotalPoint }} out of {{ totalPoint }}
                         </div>
 
+                        <div v-if="displayErrorMessage" class="alert alert-danger" role="alert">
+                             {{ errorMessage }} !
+                        </div>
+
+
                         <div v-if="!gameTime" class="d-flex justify-content-center">
                             <button @click="setupGame" type="button" class="btn btn-primary">
                                 Start New Game
@@ -67,24 +72,34 @@ export default {
             gameTime: false,
             header: '',
             mainHeader: 'Would you like to start a fresh game ?',
-            game: {}
+            game: {},
+            displayErrorMessage : false,
+            errorMessage : null
         }
     },
     mounted() {
         this.resetHeader()
     },
     methods: {
-        setupGame() {
+        async setupGame() {
+
             this.resetSession()
-            axios.all([
-                axios.get('api/game/startNewGame'),
-                axios.get('api/game/getFreshQuestions'),
-            ])
-                .then(axios.spread((game, questions) => {
-                    this.gameId = game.data.data.id
-                    this.startTheGame(questions.data.data)
-                    this.gameTime = true
-                }));
+
+            try {
+                let game = await axios.get('api/game/startNewGame')
+                let questions = await axios.get('api/game/getFreshQuestions')
+
+                this.gameId = game.data.data.id
+                this.startTheGame(questions.data.data)
+                this.gameTime = true
+
+            } catch (error) {
+
+                this.displayErrorMessage = true
+                this.errorMessage = error.response.data.error
+
+            }
+
         },
         async sendResult() {
             const url = `api/game/updateGameScore/${this.gameId}`
@@ -111,6 +126,7 @@ export default {
             this.selected = ''
             this.correctItem = null
             this.cursor = 0
+            this.displayErrorMessage = false
         },
         lastQuestion(cursor) {
             return cursor === this.totalQuestions;

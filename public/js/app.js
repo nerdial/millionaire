@@ -5327,6 +5327,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5349,7 +5354,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       gameTime: false,
       header: '',
       mainHeader: 'Would you like to start a fresh game ?',
-      game: {}
+      game: {},
+      displayErrorMessage: false,
+      errorMessage: null
     };
   },
   mounted: function mounted() {
@@ -5359,36 +5366,68 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     setupGame: function setupGame() {
       var _this = this;
 
-      this.resetSession();
-      axios.all([axios.get('api/game/startNewGame'), axios.get('api/game/getFreshQuestions')]).then(axios.spread(function (game, questions) {
-        _this.gameId = game.data.data.id;
-
-        _this.startTheGame(questions.data.data);
-
-        _this.gameTime = true;
-      }));
-    },
-    sendResult: function sendResult() {
-      var _this2 = this;
-
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-        var url;
+        var game, questions;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                _this.resetSession();
+
+                _context.prev = 1;
+                _context.next = 4;
+                return axios.get('api/game/startNewGame');
+
+              case 4:
+                game = _context.sent;
+                _context.next = 7;
+                return axios.get('api/game/getFreshQuestions');
+
+              case 7:
+                questions = _context.sent;
+                _this.gameId = game.data.data.id;
+
+                _this.startTheGame(questions.data.data);
+
+                _this.gameTime = true;
+                _context.next = 17;
+                break;
+
+              case 13:
+                _context.prev = 13;
+                _context.t0 = _context["catch"](1);
+                _this.displayErrorMessage = true;
+                _this.errorMessage = _context.t0.response.data.error;
+
+              case 17:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, null, [[1, 13]]);
+      }))();
+    },
+    sendResult: function sendResult() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var url;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
                 url = "api/game/updateGameScore/".concat(_this2.gameId);
-                _context.next = 3;
+                _context2.next = 3;
                 return axios.patch(url, {
                   score: _this2.userTotalPoint
                 });
 
               case 3:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     },
     resetHeader: function resetHeader() {
@@ -5410,6 +5449,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.selected = '';
       this.correctItem = null;
       this.cursor = 0;
+      this.displayErrorMessage = false;
     },
     lastQuestion: function lastQuestion(cursor) {
       return cursor === this.totalQuestions;
@@ -29220,6 +29260,23 @@ var render = function () {
                         " out of " +
                         _vm._s(_vm.totalPoint) +
                         "\n                    "
+                    ),
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.displayErrorMessage
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "alert alert-danger",
+                    attrs: { role: "alert" },
+                  },
+                  [
+                    _vm._v(
+                      "\n                         " +
+                        _vm._s(_vm.errorMessage) +
+                        " !\n                    "
                     ),
                   ]
                 )

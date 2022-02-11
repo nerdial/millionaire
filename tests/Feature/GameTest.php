@@ -28,7 +28,7 @@ class GameTest extends TestCase
             $this->user,
             ['*']
         );
-        $this->seed('QuestionSeeder');
+
     }
 
     /**
@@ -37,6 +37,8 @@ class GameTest extends TestCase
      */
     public function test_start_a_new_game()
     {
+        $this->seed('QuestionSeeder');
+
         $response = $this->get(route('api.game.start'));
         $game = $this->user->games->last();
 
@@ -53,6 +55,18 @@ class GameTest extends TestCase
             ]);
     }
 
+    public function test_start_a_new_game_with_empty_questions()
+    {
+
+        // there is no questions in the table at the moment.
+
+        $response = $this->get(route('api.game.start'));
+        $response->assertStatus(400)
+            ->assertJsonStructure([ // expecting game id
+                'success', 'error'
+            ]);
+    }
+
 
     /**
      *
@@ -60,6 +74,8 @@ class GameTest extends TestCase
      */
     public function test_get_fresh_questions()
     {
+        $this->seed('QuestionSeeder');
+
         $response = $this->get(route('api.game.getQuestions'));
         $response->assertStatus(200)
             ->assertJsonCount(5, 'data')
