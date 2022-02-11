@@ -9,9 +9,6 @@ use App\Http\Resources\QuestionResource;
 use App\Models\Game;
 use App\Models\Question;
 use App\Services\GameService;
-use http\Env\Response;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 class GameController extends Controller
 {
@@ -26,7 +23,6 @@ class GameController extends Controller
                 'success' => false,
                 'error'  => 'There is not much questions to ask ! '
             ], 400);
-
         }
 
         $user = auth()->user();
