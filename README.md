@@ -1,12 +1,15 @@
+## For your convenience here is a heroku deployed app
+
 http://cryptic-badlands-96373.herokuapp.com/#/
 
 ## Features
 2. Login
 3. Register
-4. Top 10 user table
-5. Personal stat for each user
-6. Creating new question and option only by admin
-7. And obviously playing some game.
+4. Unit tests
+5. Top 10 user table
+6. Personal stat for each user
+7. Creating new question and option only by admin
+8. And obviously playing some game.
 
 ## Clone the project and run composer
 
@@ -38,9 +41,16 @@ php artisan migrate --seed
 php artisan migrate
 ```
 
+
+## This project also contains unit tests for each api
+
+```console
+php artisan test
+```
+
+
 ## At the end,  run your webserver by calling : 
 
 ```console
 php artisan serve
 ```
-

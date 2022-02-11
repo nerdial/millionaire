@@ -39,8 +39,8 @@ export default {
     },
     async mounted() {
         const {data} = await axios.get('api/stat/userStat')
-        this.totalGames = data.total_games
-        this.totalPoints = data.total_points
+        this.totalGames = data.data.total_games
+        this.totalPoints = data.data.total_points
     }
 }
 </script>

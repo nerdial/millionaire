@@ -12,7 +12,9 @@ class StatController extends Controller
     {
         $user = auth()->user();
         $data = $statService->getUserStat($user);
-        return response()->json($data);
+        return response()->json([
+            'data' => $data
+        ]);
     }
 
     public function getTopUsers(StatService $statService)

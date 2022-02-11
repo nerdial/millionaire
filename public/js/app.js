@@ -5548,8 +5548,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 2:
               _yield$axios$get = _context.sent;
               data = _yield$axios$get.data;
-              _this.totalGames = data.total_games;
-              _this.totalPoints = data.total_points;
+              _this.totalGames = data.data.total_games;
+              _this.totalPoints = data.data.total_points;
 
             case 6:
             case "end":
