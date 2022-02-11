@@ -105,6 +105,7 @@ export default {
             this.displayNext = true
         },
         resetSession() {
+            this.displayResult = false
             this.userTotalPoint = 0
             this.totalPoint = 0
             this.selected = ''

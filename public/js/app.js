@@ -5404,6 +5404,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.displayNext = true;
     },
     resetSession: function resetSession() {
+      this.displayResult = false;
       this.userTotalPoint = 0;
       this.totalPoint = 0;
       this.selected = '';
