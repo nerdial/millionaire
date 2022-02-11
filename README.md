@@ -8,8 +8,8 @@ http://cryptic-badlands-96373.herokuapp.com/#/
 4. Unit tests
 5. Top 10 user table
 6. Personal stat for each user
-7. Creating new question and option only by admin
-8. And obviously playing some game.
+7. Start game.
+8. Crud generator for questions and options (still under development)
 
 ## Clone the project and run composer
 
