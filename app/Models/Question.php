@@ -9,6 +9,8 @@ class Question extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['title', 'point'];
+
     public function options()
     {
         return $this->hasMany(Option::class);

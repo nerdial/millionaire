@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Game;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -13,11 +14,18 @@ class GameTest extends TestCase
 
     use RefreshDatabase;
 
+    protected $user;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->user = User::factory()
+            ->has(Game::factory()->count(5))
+            ->create()->first();
+
         Sanctum::actingAs(
-            User::factory()->create(),
+            $this->user,
             ['*']
         );
         $this->seed('QuestionSeeder');
@@ -30,8 +38,8 @@ class GameTest extends TestCase
     public function test_start_a_new_game()
     {
         $response = $this->get(route('api.game.start'));
-        $user = User::first();
-        $game = $user->games()->first();
+        $game = $this->user->games->last();
+
         $response->assertStatus(201)
             ->assertJsonStructure([ // expecting game id
                 'data' => [
@@ -70,6 +78,28 @@ class GameTest extends TestCase
         $collection = collect($response->json('data'));
         $uniqueCounted = $collection->pluck('id')->unique()->count();
         $this->assertEquals($uniqueCounted, 5);
+    }
+
+
+    public function test_update_game_score()
+    {
+
+        $game = $this->user->games()->first();
+
+        $url = route('api.game.updateGameScore', [
+            'game' => $game->id
+        ]);
+
+        $newScore = 120;
+
+        $this->patch($url, [
+            'score' => $newScore
+        ])->assertSuccessful();
+
+        $game->refresh();
+
+        $this->assertEquals($game->total_point, $newScore);
+
     }
 
 }
