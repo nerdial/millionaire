@@ -29,11 +29,20 @@ cp .env.example .env
 php artisan key:generate
 ```
 
-## If you want dummy stats, user, game and questions:
+## If you want an admin user, dummy stats, game and questions:
 
 ```console
 php artisan migrate --seed
 ```
+
+####Note: If you want an admin user, make sure you run the seeders first
+####Then tries these :
+
+```console
+-email : user@email.com
+-password : password
+```
+
 
 ## Otherwise, run only migrations
 
