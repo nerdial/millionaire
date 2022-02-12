@@ -9,7 +9,7 @@ http://cryptic-badlands-96373.herokuapp.com/#/
 5. Top 10 user table
 6. Personal stat for each user
 7. Start game.
-8. Crud generator for questions and options (still under development)
+8. Crud for questions and options
 
 ## Clone the project and run composer
 
