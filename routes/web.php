@@ -19,8 +19,15 @@ Route::get('/', function () {
 });
 
 
-Route::resource('questions', \App\Http\Controllers\QuestionController::class);
+Route::middleware(['auth', 'admin'])->group(function(){
 
+
+
+    Route::resource('questions', \App\Http\Controllers\QuestionController::class);
+    Route::resource('options', \App\Http\Controllers\OptionController::class);
+
+
+
+});
 
 Auth::routes([]);
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
