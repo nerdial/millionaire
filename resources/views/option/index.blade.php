@@ -35,9 +35,9 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        
+
 										<th>Title</th>
-										<th>Question Id</th>
+										<th>Question</th>
 										<th>Is Correct</th>
 
                                         <th></th>
@@ -47,11 +47,9 @@
                                     @foreach ($options as $option)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            
 											<td>{{ $option->title }}</td>
-											<td>{{ $option->question_id }}</td>
-											<td>{{ $option->is_correct }}</td>
-
+											<td>{{  $option->question->title ?? ''  }}</td>
+											<td>{{ $option->is_correct ? 'True' : 'False' }}</td>
                                             <td>
                                                 <form action="{{ route('options.destroy',$option->id) }}" method="POST">
                                                     <a class="btn btn-sm btn-primary " href="{{ route('options.show',$option->id) }}"><i class="fa fa-fw fa-eye"></i> Show</a>
