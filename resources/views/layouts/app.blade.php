@@ -23,14 +23,20 @@
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                Who wants to be a Millionaire ?
+            <a class="navbar-brand" href="{{ route('main') }}">
+                Millionaire
             </a>
 
+
+
             @auth
-                <router-link style="margin-left: 20px" to="/">Start Game</router-link>
-                <router-link style="margin-left: 20px" to="/tops">Top Users</router-link>
-                <router-link style="margin-left: 20px" to="/stat">User Stat</router-link>
+                @if(Route::is('main') )
+                    <router-link style="margin-left: 20px" to="/">Start Game</router-link>
+                    <router-link style="margin-left: 20px" to="/tops">Top Users</router-link>
+                    <router-link style="margin-left: 20px" to="/stat">User Stat</router-link>
+                @endif
+
+
                 @admin
                 <a style="margin-left: 20px" href="/questions"> Questions </a>
                 <a style="margin-left: 20px" href="/options"> Options </a>
