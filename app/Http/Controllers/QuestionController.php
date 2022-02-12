@@ -18,7 +18,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::paginate();
+        $questions = Question::simplePaginate();
 
         return view('question.index', compact('questions'))
             ->with('i', (request()->input('page', 1) - 1) * $questions->perPage());
