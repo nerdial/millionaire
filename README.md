@@ -35,8 +35,8 @@ php artisan key:generate
 php artisan migrate --seed
 ```
 
-###Note: If you want an admin user, make sure you run the seeders first
-###Then tries these :
+#### Note: If you want an admin user, make sure you run the seeders first
+#### Then try these :
 
 ```console
 -email : user@email.com
